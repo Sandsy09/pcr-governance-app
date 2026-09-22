@@ -1,0 +1,139 @@
+[project]
+name = "pcr-governance-app"
+version = "0.1.0"
+description = "Internal Python application for PCR management"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+    "Typing :: Typed",
+]
+dependencies = [
+]
+
+[project.urls]
+Repository = "https://github.com/Sandsy09/pcr-governance-app"
+Issues = "https://github.com/Sandsy09/pcr-governance-app/issues"
+
+[build-system]
+requires = ["uv_build>=0.12,<0.13"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "pcr_governance_app"
+module-root = "src"
+
+# -----------------------------------------------------------------------------
+# Dependency groups (PEP 735) -- not shipped to consumers
+# -----------------------------------------------------------------------------
+
+[dependency-groups]
+lint = [
+    "ruff>=0.14",
+]
+test = [
+    "pytest>=8.3",
+]
+typecheck = [
+    "mypy>=1.14",
+]
+dev = [
+    { include-group = "lint" },
+    { include-group = "test" },
+    { include-group = "typecheck" },
+    "poethepoet>=0.31",
+    "git-cliff>=2.7,<3",
+    "pytest-cov>=6,<8",
+    "pre-commit>=4,<5",
+    "pyright>=1.1.390,<2",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+# -----------------------------------------------------------------------------
+# Ruff
+# -----------------------------------------------------------------------------
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E", "W",    # pycodestyle
+    "F",         # pyflakes
+    "I",         # isort
+    "N",         # pep8-naming
+    "UP",        # pyupgrade
+    "B",         # flake8-bugbear
+    "A",         # flake8-builtins
+    "C4",        # flake8-comprehensions
+    "SIM",       # flake8-simplify
+    "PTH",       # flake8-use-pathlib
+    "RUF",       # ruff-specific
+    "ANN",       # flake8-annotations
+    "D",         # pydocstyle
+]
+ignore = [
+    "D107",      # __init__ docstring - covered by the class docstring
+    "ANN401",    # allow Any where deliberately used
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["D", "ANN", "S101"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+# -----------------------------------------------------------------------------
+# Type checking
+# -----------------------------------------------------------------------------
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+warn_unused_ignores = true
+
+# -----------------------------------------------------------------------------
+# Tests
+# -----------------------------------------------------------------------------
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--import-mode=importlib",
+]
+
+# -----------------------------------------------------------------------------
+# Tasks -- the single definition. Run via `uv run poe <task>`.
+# -----------------------------------------------------------------------------
+
+[tool.poe.tasks]
+"lock:check" = "uv lock --check"
+lint = "ruff check ."
+format = "ruff format ."
+"lint:fix" = "ruff check --fix ."
+"format:check" = "ruff format --check ."
+typecheck = "mypy ."
+test = "pytest"
+changelog = "git-cliff --output CHANGELOG.md"
+coverage = "pytest --cov --cov-report=term-missing"
+"typecheck:pyright" = "pyright"
+check = [
+    "lock:check",
+    "format:check",
+    "lint",
+    "typecheck",
+    "test",
+    "coverage",
+    "typecheck:pyright",
+]

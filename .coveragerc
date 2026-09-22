@@ -1,0 +1,12 @@
+[run]
+source =
+    src/pcr_governance_app
+branch = true
+
+[report]
+show_missing = true
+fail_under = 85
+exclude_also =
+    if TYPE_CHECKING:
+    raise NotImplementedError
+    @(abc\.)?abstractmethod

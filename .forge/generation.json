@@ -1,0 +1,252 @@
+{
+  "components": [
+    {
+      "id": "library",
+      "version": "1.0.1"
+    },
+    {
+      "id": "changelog",
+      "version": "1.0.0"
+    },
+    {
+      "id": "coverage",
+      "version": "1.0.0"
+    },
+    {
+      "id": "dependabot",
+      "version": "1.0.0"
+    },
+    {
+      "id": "dotenv-example",
+      "version": "1.0.0"
+    },
+    {
+      "id": "pre-commit",
+      "version": "1.0.1"
+    },
+    {
+      "id": "pyright",
+      "version": "1.0.0"
+    },
+    {
+      "id": "github",
+      "version": "1.0.0"
+    }
+  ],
+  "metadata_version": 1,
+  "output": [
+    {
+      "digest": "sha256:4d7179125f1ec752e953352dda9e817191fbe6356506e4d3c607cc6bf7aba67e",
+      "owner": "component:coverage",
+      "regeneration": "replace",
+      "target": ".coveragerc"
+    },
+    {
+      "digest": "sha256:a10720f6f50dcdf97ba7b7c019c8c343ba956e4856aa01533dfafc76e3d4c88a",
+      "owner": "foundation",
+      "regeneration": "replace",
+      "target": ".editorconfig"
+    },
+    {
+      "digest": "sha256:4e42f1e0c593fdd893bb552420ccf2d0274832ebbf8324ec9e286b049ceb3e6d",
+      "owner": "component:dotenv-example",
+      "regeneration": "replace",
+      "target": ".env.example"
+    },
+    {
+      "digest": "sha256:373dea2f58df869861b527c087fd1809edf12baf10c0c20941effca0863f9dbc",
+      "owner": "foundation",
+      "regeneration": "replace",
+      "target": ".gitattributes"
+    },
+    {
+      "digest": "sha256:5b45ee952175ef1029fc298210ee9a57a2fa99acd58953d40c0ab5ccaf709463",
+      "owner": "component:github",
+      "regeneration": "replace",
+      "target": ".github/CODEOWNERS"
+    },
+    {
+      "digest": "sha256:d4d61cd1d05389a7a997013fde91a9a783d4d30887e51290481845d692cdaba3",
+      "owner": "component:github",
+      "regeneration": "replace",
+      "target": ".github/ISSUE_TEMPLATE/bug_report.yml"
+    },
+    {
+      "digest": "sha256:1f103c6a9dd07cd13a9a6f17ace6b813f47747eb9cb7e00488cb2073caaf91bb",
+      "owner": "component:github",
+      "regeneration": "replace",
+      "target": ".github/ISSUE_TEMPLATE/config.yml"
+    },
+    {
+      "digest": "sha256:2142060e1afc1c35cc4760690af5b55a82c2a678529b58cba3e2c4b305820604",
+      "owner": "component:github",
+      "regeneration": "replace",
+      "target": ".github/ISSUE_TEMPLATE/feature_request.yml"
+    },
+    {
+      "digest": "sha256:a6fc11184d27c207c946a931dcf74d99687cbdafe46a5323cd48451839479537",
+      "owner": "component:dependabot",
+      "regeneration": "replace",
+      "target": ".github/dependabot.yml"
+    },
+    {
+      "digest": "sha256:1aabb313617ea373b11694755522f27d6311b11b6455ab0b1b4a2d2f24afea1d",
+      "owner": "component:github",
+      "regeneration": "replace",
+      "target": ".github/pull_request_template.md"
+    },
+    {
+      "digest": "sha256:2c46985c73b3d02a573b525dddc7b8124876f3383269632369fcc02143eb0f5c",
+      "owner": "component:github",
+      "regeneration": "replace",
+      "target": ".github/workflows/ci.yml"
+    },
+    {
+      "digest": "sha256:631b2635295d9277940b7398af0f57ba5a3c3b92433136d2eb55b2910879e76c",
+      "owner": "foundation",
+      "regeneration": "replace",
+      "target": ".gitignore"
+    },
+    {
+      "digest": "sha256:cda29087e7e4664995c7e5d413e5728e2952887cf246f1dfef93b16b34b72a5f",
+      "owner": "component:pre-commit",
+      "regeneration": "replace",
+      "target": ".pre-commit-config.yaml"
+    },
+    {
+      "digest": "sha256:02e735b3dfe1c32833eb550b7ff8ffa17f5f2bc3fa1e7bae61a8f5a3883ce398",
+      "owner": "foundation",
+      "regeneration": "replace",
+      "target": ".python-version"
+    },
+    {
+      "digest": "sha256:c856189bcbb13aa37364fffe35faf48b814c5803ea3f82ea05f00e9cc577e37d",
+      "owner": "component:changelog",
+      "regeneration": "skip-if-exists",
+      "target": "CHANGELOG.md"
+    },
+    {
+      "digest": "sha256:f1e45eb42b3f81891e1a592e828fe92a10e9f2385f13f1b327dbfe7ef626144b",
+      "owner": "foundation",
+      "regeneration": "replace",
+      "target": "CONTRIBUTING.md"
+    },
+    {
+      "digest": "sha256:78a2a91b3bd054b0f8d630d31715dce4736d9040c48977755751a3cb838c3f50",
+      "owner": "foundation",
+      "regeneration": "replace",
+      "target": "LICENSE"
+    },
+    {
+      "digest": "sha256:3a39499a7598a4fae7ed882be29c0afaa3986d8c83b52bd7f4dd8ef79c608c47",
+      "owner": "foundation",
+      "regeneration": "replace",
+      "target": "README.md"
+    },
+    {
+      "digest": "sha256:fb30c88cdb262b7e83369a8ea6992966158a03552294f75bd30590f04176bcdf",
+      "owner": "foundation",
+      "regeneration": "replace",
+      "target": "SECURITY.md"
+    },
+    {
+      "digest": "sha256:4c686e31f400c811839fcc0a94ca661f2c476d8f3127cfbc8c6593e7ddd7c577",
+      "owner": "component:changelog",
+      "regeneration": "replace",
+      "target": "cliff.toml"
+    },
+    {
+      "digest": "sha256:bad086e4e4198291bd5b6940005b12a1dd5141bed2c97be69744ccc05d9ef44d",
+      "owner": "foundation",
+      "regeneration": "replace",
+      "target": "pyproject.toml"
+    },
+    {
+      "digest": "sha256:6f885c81d2c9b69da67a95adb979a9cf8485e556bafbb2e8c66f504088ed3c21",
+      "owner": "component:pyright",
+      "regeneration": "replace",
+      "target": "pyrightconfig.json"
+    },
+    {
+      "digest": "sha256:51d115f22ab71d6aab9258869f4a026616159d49ed2dd2b553ec653be5bb7679",
+      "owner": "component:library",
+      "regeneration": "replace",
+      "target": "src/pcr_governance_app/__init__.py"
+    },
+    {
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "owner": "component:library",
+      "regeneration": "replace",
+      "target": "src/pcr_governance_app/py.typed"
+    },
+    {
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "owner": "component:library",
+      "regeneration": "replace",
+      "target": "tests/__init__.py"
+    },
+    {
+      "digest": "sha256:4262422ce0ea81aa9f8f4cd524986513bf0bab2a3367c63e0a2226f289450ba1",
+      "owner": "component:library",
+      "regeneration": "replace",
+      "target": "tests/test_smoke.py"
+    }
+  ],
+  "protocols": {
+    "component_manifest": [
+      1,
+      2,
+      3
+    ],
+    "projectspec": 1
+  },
+  "provider": {
+    "distribution": "forge-template",
+    "version": "0.6.0"
+  },
+  "spec": {
+    "component_options": {
+      "coverage": {
+        "fail_under": 85
+      },
+      "github": {
+        "organisation": "Sandsy09"
+      },
+      "library": {
+        "initial_version": "0.1.0",
+        "packaging_mode": "uv-build-static"
+      }
+    },
+    "components": {
+      "archetype": "library",
+      "capabilities": [
+        "changelog",
+        "coverage",
+        "dependabot",
+        "dotenv-example",
+        "pre-commit",
+        "pyright"
+      ],
+      "platforms": [
+        "github"
+      ]
+    },
+    "project": {
+      "authors": [],
+      "description": "Internal Python application for PCR management",
+      "licence": "mit",
+      "name": "PCR Governance App",
+      "package_name": "pcr_governance_app",
+      "repository_name": "pcr-governance-app"
+    },
+    "protocol_version": 1,
+    "provenance": {
+      "policies": [],
+      "profile": null
+    },
+    "python": {
+      "development": "3.13",
+      "minimum": "3.11"
+    }
+  }
+}
