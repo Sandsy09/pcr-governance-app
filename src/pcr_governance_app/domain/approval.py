@@ -55,8 +55,6 @@ class ApprovalSelector(BaseModel):
             case ApprovalSelectorType.DEPARTMENT:
                 return self.value in principal.departments
 
-        return False
-
 
 class ApprovalRequirement(BaseModel):
     model_config = ConfigDict(frozen=True)

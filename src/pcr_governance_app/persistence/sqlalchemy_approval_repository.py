@@ -129,7 +129,7 @@ class SqlAlchemyApprovalWorkflowRepository:
         return self._session.scalar(statement)
 
     @staticmethod
-    def _base_statement() -> Select:
+    def _base_statement() -> Select[tuple[ApprovalWorkflowRecord]]:
         return select(ApprovalWorkflowRecord).options(
             selectinload(ApprovalWorkflowRecord.decisions),
             selectinload(ApprovalWorkflowRecord.route)

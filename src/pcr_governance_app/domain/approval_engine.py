@@ -94,8 +94,6 @@ class ApprovalEngine:
             case ApprovalStageMode.ALL:
                 return all(satisfied)
 
-        return False
-
     @classmethod
     def approve(
         cls,
