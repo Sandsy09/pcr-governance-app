@@ -1,8 +1,8 @@
 from collections.abc import Mapping
 
-from .enums import PCRStatus
-from .errors import InvalidPCRTransitionError, MissingPCRRevisionError
-from .pcr import PCR
+from pcr_governance_app.domain.enums import PCRStatus
+from pcr_governance_app.domain.errors import InvalidPCRTransitionError, MissingPCRRevisionError
+from pcr_governance_app.domain.pcr import PCR
 
 ALLOWED_TRANSITIONS: Mapping[PCRStatus, frozenset[PCRStatus]] = {
     PCRStatus.DRAFT: frozenset({PCRStatus.IN_REVIEW, PCRStatus.WITHDRAWN}),

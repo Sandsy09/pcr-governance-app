@@ -3,8 +3,8 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
-from .enums import ChangeType, CommunicationTarget, PCRStatus
-from .time import utc_now
+from pcr_governance_app.domain.enums import ChangeType, CommunicationTarget, PCRStatus
+from pcr_governance_app.domain.time import utc_now
 
 
 class PCRContent(BaseModel):

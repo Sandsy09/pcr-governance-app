@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from .approval import (
+from pcr_governance_app.domain.approval import (
     ApprovalActionResult,
     ApprovalDecision,
     ApprovalDecisionType,
@@ -12,15 +12,15 @@ from .approval import (
     ApprovalWorkflow,
     ApprovalWorkflowStatus,
 )
-from .enums import PCRStatus
-from .errors import (
+from pcr_governance_app.domain.enums import PCRStatus
+from pcr_governance_app.domain.errors import (
     ApprovalAuthorisationError,
     ApprovalRouteError,
     ApprovalWorkflowStateError,
     DuplicateApprovalDecisionError,
 )
-from .pcr import PCR
-from .time import utc_now
+from pcr_governance_app.domain.pcr import PCR
+from pcr_governance_app.domain.time import utc_now
 
 
 class ApprovalEngine:

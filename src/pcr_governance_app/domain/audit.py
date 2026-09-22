@@ -4,7 +4,7 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .time import utc_now
+from pcr_governance_app.domain.time import utc_now
 
 
 class AuditEventType(StrEnum):
