@@ -747,7 +747,7 @@ wheels = [
 
 [[package]]
 name = "pcr-governance-app"
-version = "0.1.17"
+version = "0.1.18"
 source = { editable = "." }
 dependencies = [
     { name = "alembic" },
