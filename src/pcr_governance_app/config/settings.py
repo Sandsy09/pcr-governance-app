@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "pcr_governance_app.web.apps.PCRGovernanceWebConfig",
+    "pcr_governance_app.web.apps.PCRGovernanceWebConfig",
 ]
 
 MIDDLEWARE = [
@@ -78,7 +78,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                # "pcr_governance_app.web.context_processors.actor_context",
+                "pcr_governance_app.web.context_processors.actor_context",
             ],
         },
     },

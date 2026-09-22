@@ -18,6 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from pcr_governance_app.web import views
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", views.pcr_register, name="pcr-register"),
+    path("pcrs/new/", views.create_pcr, name="pcr-create"),
+    path("pcrs/<uuid:pcr_id>/", views.pcr_detail, name="pcr-detail"),
+    path("development-actor/", views.set_actor, name="set-actor"),
 ]
