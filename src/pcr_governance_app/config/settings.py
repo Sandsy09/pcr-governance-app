@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+from os import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +21,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-$u520#$!hpi2b2xf=h5d9#d(a1m7zmf%i+kw$#8n3bk2!7zv*s"
+SECRET_KEY = environ.get(
+    "PCR_DJANGO_SECRET_KEY",
+    "django-insecure-$u520#$!hpi2b2xf=h5d9#d(a1m7zmf%i+kw$#8n3bk2!7zv*s",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = environ.get("PCR_DEBUG", "true").strip().lower() in {
+    "1",
+    "true",
+    "yes",
+    "on",
+}
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in environ.get(
+        "PCR_ALLOWED_HOSTS",
+        "localhost,127.0.0.1,[::1]",
+    ).split(",")
+    if host.strip()
+]
 
 
 # Application definition
@@ -37,6 +53,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # "pcr_governance_app.web.apps.PCRGovernanceWebConfig",
 ]
 
 MIDDLEWARE = [
@@ -49,7 +66,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "config.urls"
+ROOT_URLCONF = "pcr_governance_app.config.urls"
 
 TEMPLATES = [
     {
@@ -61,12 +78,20 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # "pcr_governance_app.web.context_processors.actor_context",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = "config.wsgi.application"
+# The PCR data store remains behind the existing SQLAlchemy/Alembic boundary.
+# Signed-cookie sessions avoid introducing a second persistence schema merely
+# to host the current development identity selector.
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
+ASGI_APPLICATION = "pcr_governance_app.config.asgi.application"
+WSGI_APPLICATION = "pcr_governance_app.config.wsgi.application"
 
 
 # Database
@@ -102,12 +127,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
-
+LANGUAGE_CODE = "en-gb"
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -115,7 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = "static/"
-
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

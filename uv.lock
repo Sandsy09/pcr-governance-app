@@ -285,6 +285,36 @@ wheels = [
 ]
 
 [[package]]
+name = "django-stubs"
+version = "6.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django", version = "5.2.17", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "django", version = "6.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "django-stubs-ext" },
+    { name = "types-pyyaml" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2b/d6/fb467f5f769b831680d8cb6705e4bbec335c79b328ff7e347e220e676da8/django_stubs-6.1.1.tar.gz", hash = "sha256:291fd79197416d191ec9f4e443bc6800b64dd5d41e476b91e679495d005f3d61", size = 295523, upload-time = "2026-09-14T08:46:24.686Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9d/26/911e381b1cee7fbb7f11f640ec4be4ec1b6ae49dc58ff2cb829cf12dc4b9/django_stubs-6.1.1-py3-none-any.whl", hash = "sha256:a913d0c35242cd820f638486118fd542d687b6a85104bea9cb7e635b52b889e3", size = 559401, upload-time = "2026-09-14T08:46:23.153Z" },
+]
+
+[[package]]
+name = "django-stubs-ext"
+version = "6.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django", version = "5.2.17", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "django", version = "6.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4c/70/5f80a3acf99d26dea89e892d4573f0e650904e573708b5fbf3bfc9cec72c/django_stubs_ext-6.1.1.tar.gz", hash = "sha256:c35263135558d4c5d12b69e1f4c98632bf59bc3ab5118f7d4882d12800e3a7dd", size = 7217, upload-time = "2026-09-14T08:45:52.44Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/99/c3/305a9f7611c0dc96d2a638bc3a67bdcde5a7faa5f4669188db018b8af6fc/django_stubs_ext-6.1.1-py3-none-any.whl", hash = "sha256:64aebb7ce2c327a4a2b75207d67034e879fd7edf027c93487be69da363dc79fa", size = 10853, upload-time = "2026-09-14T08:45:51.289Z" },
+]
+
+[[package]]
 name = "django-tailwind"
 version = "4.5.0"
 source = { registry = "https://pypi.org/simple" }
@@ -732,6 +762,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "django-stubs" },
     { name = "git-cliff" },
     { name = "mypy" },
     { name = "poethepoet" },
@@ -746,9 +777,12 @@ lint = [
 ]
 test = [
     { name = "pytest" },
+    { name = "pytest-cov" },
 ]
 typecheck = [
+    { name = "django-stubs" },
     { name = "mypy" },
+    { name = "pyright" },
 ]
 
 [package.metadata]
@@ -764,6 +798,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "django-stubs", specifier = ">=6.1.1" },
     { name = "git-cliff", specifier = ">=2.7,<3" },
     { name = "mypy", specifier = ">=1.14" },
     { name = "poethepoet", specifier = ">=0.31" },
@@ -774,8 +809,15 @@ dev = [
     { name = "ruff", specifier = ">=0.14" },
 ]
 lint = [{ name = "ruff", specifier = ">=0.14" }]
-test = [{ name = "pytest", specifier = ">=8.3" }]
-typecheck = [{ name = "mypy", specifier = ">=1.14" }]
+test = [
+    { name = "pytest", specifier = ">=8.3" },
+    { name = "pytest-cov", specifier = ">=6,<8" },
+]
+typecheck = [
+    { name = "django-stubs", specifier = ">=6.1.1" },
+    { name = "mypy", specifier = ">=1.14" },
+    { name = "pyright", specifier = ">=1.1.390,<2" },
+]
 
 [[package]]
 name = "platformdirs"
@@ -1281,6 +1323,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/d8/b2/c941ce83a59e46ef31dd04bdf6067530e7ec77d5f0cdd1e223fbc6fc351b/ty-0.0.83-py3-none-win32.whl", hash = "sha256:0391017dac6ba3e452e0322301f50bba12fbccadac07d7fd888c46951ad37638", size = 13105291, upload-time = "2026-09-21T22:47:19.807Z" },
     { url = "https://files.pythonhosted.org/packages/b2/8a/5eef9458505698b144643cbd2062f465c5d860d8cf86a8710d74505ad9a0/ty-0.0.83-py3-none-win_amd64.whl", hash = "sha256:1b67d86f5bbad4076ae1a2ff23a6a4493219885d72d4b148cb0193e090390060", size = 13901557, upload-time = "2026-09-21T22:47:23.429Z" },
     { url = "https://files.pythonhosted.org/packages/9f/27/a06061513f1de25569c2e8898018bd552ab7b31afa7cfe818703269b3350/ty-0.0.83-py3-none-win_arm64.whl", hash = "sha256:a916a3d7d68fe30b7aacdb9fe16d461fa944d722e59e96ea0fa9d206a1b6625f", size = 13627960, upload-time = "2026-09-21T22:47:26.305Z" },
+]
+
+[[package]]
+name = "types-pyyaml"
+version = "6.0.12.20260906"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/90/6e/abec85b9013db5b934b0280a6dd104904d84f7bcbaab2e2f3def87ac7463/types_pyyaml-6.0.12.20260906.tar.gz", hash = "sha256:f59c1cc05010b833d2d72287bbaa72610106b28d42d89a907313117faba85212", size = 18649, upload-time = "2026-09-06T06:35:35.362Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/15/c0/fc0644b7ddcfb969e95845837143cb5173ddd6e06ee4ba5fc493cd9329b7/types_pyyaml-6.0.12.20260906-py3-none-any.whl", hash = "sha256:bca893ff0d51df5c9053137d5d0e6ccd36e939a196356f1d5c16372422f5137b", size = 21282, upload-time = "2026-09-06T06:35:34.372Z" },
 ]
 
 [[package]]

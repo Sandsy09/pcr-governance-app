@@ -41,9 +41,12 @@ lint = [
 ]
 test = [
     "pytest>=8.3",
+    "pytest-cov>=6,<8",
 ]
 typecheck = [
     "mypy>=1.14",
+    "pyright>=1.1.390,<2",
+    "django-stubs>=6.1.1",
 ]
 dev = [
     { include-group = "lint" },
@@ -51,9 +54,7 @@ dev = [
     { include-group = "typecheck" },
     "poethepoet>=0.31",
     "git-cliff>=2.7,<3",
-    "pytest-cov>=6,<8",
     "pre-commit>=4,<5",
-    "pyright>=1.1.390,<2",
 ]
 
 [tool.uv]
@@ -81,7 +82,7 @@ select = [
     "PTH",       # flake8-use-pathlib
     "RUF",       # ruff-specific
     "ANN",       # flake8-annotations
-    "D",         # pydocstyle
+    #"D",         # pydocstyle
 ]
 ignore = [
     "D",
