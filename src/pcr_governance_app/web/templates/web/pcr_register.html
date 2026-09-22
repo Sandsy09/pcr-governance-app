@@ -1,0 +1,87 @@
+{% extends "web/base.html" %}
+
+{% block title %}PCR Register · PCR Governance{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Governance register</p>
+        <h1>PCR Register</h1>
+        <p>Current Policy Change Requests and their governance status.</p>
+    </div>
+    <a class="button" href="{% url 'pcr-create' %}">Create PCR</a>
+</section>
+
+{% if not has_pcrs %}
+    <section class="empty-state">
+        <h2>No PCRs have been created yet</h2>
+        <p>Create the first request to begin the governance record.</p>
+        <a class="button" href="{% url 'pcr-create' %}">Create the first PCR</a>
+    </section>
+{% else %}
+    <form method="get" class="filter-panel">
+        <input type="hidden" name="filtered" value="1">
+        <div class="field search-field">
+            <label for="search">Search</label>
+            <input
+                id="search"
+                name="search"
+                value="{{ search }}"
+                placeholder="PCR code, policy code, or title"
+            >
+        </div>
+        <fieldset>
+            <legend>Status</legend>
+            <div class="checkbox-grid">
+                {% for option in status_options %}
+                    <label>
+                        <input
+                            type="checkbox"
+                            name="status"
+                            value="{{ option.value }}"
+                            {% if option.selected %}checked{% endif %}
+                        >
+                        {{ option.label }}
+                    </label>
+                {% endfor %}
+            </div>
+        </fieldset>
+        <button type="submit">Apply filters</button>
+    </form>
+
+    {% if rows %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>PCR</th>
+                        <th>Policy</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Revision</th>
+                        <th>Implementation date</th>
+                        <th>Created by</th>
+                        <th>Created at</th>
+                        <th><span class="visually-hidden">Action</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                        <tr>
+                            {% for key, value in row.items %}
+                                {% if key != "id" %}<td>{{ value|default:"—" }}</td>{% endif %}
+                            {% endfor %}
+                            <td><a href="{% url 'pcr-detail' row.id %}">View</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <section class="empty-state compact">
+            <h2>No PCRs match the selected filters</h2>
+            <p>Adjust the search text or selected statuses and try again.</p>
+        </section>
+    {% endif %}
+{% endif %}
+{% endblock %}

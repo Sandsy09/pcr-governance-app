@@ -1,0 +1,11 @@
+{% extends "web/base.html" %}
+
+{% block title %}Configuration error · PCR Governance{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <p class="eyebrow">Configuration required</p>
+    <h1>PCR Governance cannot start</h1>
+    <p>{{ configuration_error }}</p>
+</section>
+{% endblock %}

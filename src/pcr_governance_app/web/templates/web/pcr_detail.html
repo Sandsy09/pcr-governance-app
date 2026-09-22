@@ -1,0 +1,123 @@
+{% extends "web/base.html" %}
+
+{% block title %}{{ pcr.pcr_code }} · PCR Governance{% endblock %}
+
+{% block content %}
+{% if revision_missing %}
+    <div class="notice error" role="alert">
+        This PCR has no revisions and cannot be displayed correctly.
+    </div>
+{% else %}
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">Policy Change Request</p>
+            <h1>{{ pcr.pcr_code }}</h1>
+            <p>{{ revision.content.title }}</p>
+        </div>
+        <a class="button secondary" href="{% url 'pcr-register' %}">Back to register</a>
+    </section>
+
+    <dl class="metrics">
+        <div><dt>Status</dt><dd>{{ status_label }}</dd></div>
+        <div><dt>Policy</dt><dd>{{ pcr.policy_code }}</dd></div>
+        <div><dt>Revision</dt><dd>{{ revision.revision_number }}</dd></div>
+        <div><dt>Created by</dt><dd>{{ pcr.created_by }}</dd></div>
+    </dl>
+
+    <section class="card">
+        <h2>Current revision</h2>
+        <dl class="detail-list">
+            <div><dt>Description</dt><dd>{{ revision.content.description }}</dd></div>
+            <div><dt>Change type</dt><dd>{{ change_type_label }}</dd></div>
+            <div><dt>Rationale</dt><dd>{{ revision.content.rationale }}</dd></div>
+            <div><dt>Current policy</dt><dd>{{ revision.content.current_policy }}</dd></div>
+            <div><dt>Proposed policy</dt><dd>{{ revision.content.proposed_policy }}</dd></div>
+            <div><dt>Impact summary</dt><dd>{{ revision.content.impact_summary }}</dd></div>
+            <div>
+                <dt>Affected policy sections</dt>
+                <dd>
+                    {% for section in revision.content.affected_policy_sections %}
+                        {{ section }}{% if not forloop.last %}<br>{% endif %}
+                    {% empty %}—{% endfor %}
+                </dd>
+            </div>
+            <div>
+                <dt>Technical change required</dt>
+                <dd>{{ revision.content.technical_change_required|yesno:"Yes,No" }}</dd>
+            </div>
+            {% if revision.content.technical_change_required %}
+                <div>
+                    <dt>Technical change details</dt>
+                    <dd>{{ revision.content.technical_change_details|default:"—" }}</dd>
+                </div>
+            {% endif %}
+            <div><dt>Communication targets</dt><dd>{{ communication_targets }}</dd></div>
+            <div>
+                <dt>Implementation date</dt>
+                <dd>{{ revision.content.implementation_date|date:"Y-m-d"|default:"—" }}</dd>
+            </div>
+            <div><dt>Supersedes</dt><dd>{{ pcr.supersedes_pcr_id|default:"—" }}</dd></div>
+        </dl>
+    </section>
+
+    <details class="card" open>
+        <summary>Revision history</summary>
+        {% for item in revision_history %}
+            <article class="history-item">
+                <h3>Revision {{ item.revision_number }}</h3>
+                <p class="muted">
+                    {{ item.created_at|date:"Y-m-d H:i" }} UTC · Saved by {{ item.created_by }}
+                </p>
+                <dl class="detail-list compact-list">
+                    <div><dt>Title</dt><dd>{{ item.content.title }}</dd></div>
+                    <div><dt>Description</dt><dd>{{ item.content.description }}</dd></div>
+                    <div><dt>Proposed policy</dt><dd>{{ item.content.proposed_policy }}</dd></div>
+                </dl>
+            </article>
+        {% endfor %}
+    </details>
+
+    <details class="card" open>
+        <summary>Audit trail</summary>
+        {% if audit_rows %}
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>When</th><th>Event</th><th>Actor</th><th>Details</th></tr></thead>
+                    <tbody>
+                        {% for row in audit_rows %}
+                            <tr>{% for value in row.values %}<td>{{ value }}</td>{% endfor %}</tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>No audit events have been recorded for this PCR.</p>
+        {% endif %}
+    </details>
+
+    <details class="card" open>
+        <summary>Approval</summary>
+        {% if workflow %}
+            <dl class="metrics three">
+                <div><dt>Route</dt><dd>{{ workflow.route_code }}</dd></div>
+                <div><dt>Route version</dt><dd>{{ workflow.route_version }}</dd></div>
+                <div><dt>Workflow</dt><dd>{{ workflow_status_label }}</dd></div>
+            </dl>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Sequence</th><th>Stage</th><th>Mode</th><th>Requirements</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for row in approval_rows %}
+                            <tr>{% for value in row.values %}<td>{{ value }}</td>{% endfor %}</tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>There is no active approval workflow for this PCR.</p>
+        {% endif %}
+    </details>
+{% endif %}
+{% endblock %}

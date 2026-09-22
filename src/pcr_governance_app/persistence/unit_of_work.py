@@ -3,6 +3,12 @@ from typing import Self
 
 from sqlalchemy.orm import Session, sessionmaker
 
+from pcr_governance_app.persistence.repositories import (
+    ApprovalRouteRepository,
+    ApprovalWorkflowRepository,
+    AuditEventRepository,
+    PCRRepository,
+)
 from pcr_governance_app.persistence.sqlalchemy_approval_repository import (
     SqlAlchemyApprovalRouteRepository,
     SqlAlchemyApprovalWorkflowRepository,
@@ -22,10 +28,14 @@ class SqlAlchemyUnitOfWork:
     def __enter__(self) -> Self:
         self._session = self._session_factory()
         self._committed = False
-        self.pcrs = SqlAlchemyPCRRepository(self._session)
-        self.audits = SqlAlchemyAuditEventRepository(self._session)
-        self.approval_routes = SqlAlchemyApprovalRouteRepository(self._session)
-        self.approval_workflows = SqlAlchemyApprovalWorkflowRepository(self._session)
+        self.pcrs: PCRRepository = SqlAlchemyPCRRepository(self._session)
+        self.audits: AuditEventRepository = SqlAlchemyAuditEventRepository(self._session)
+        self.approval_routes: ApprovalRouteRepository = SqlAlchemyApprovalRouteRepository(
+            self._session
+        )
+        self.approval_workflows: ApprovalWorkflowRepository = SqlAlchemyApprovalWorkflowRepository(
+            self._session
+        )
         return self
 
     def __exit__(

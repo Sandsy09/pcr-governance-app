@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="en-gb">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}PCR Governance{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'web/styles.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div>
+            <a class="brand" href="{% url 'pcr-register' %}">PCR Governance</a>
+            <p>Policy Change Request governance</p>
+        </div>
+        <nav aria-label="Primary navigation">
+            <a href="{% url 'pcr-register' %}">PCR Register</a>
+            <a href="{% url 'pcr-create' %}">Create PCR</a>
+        </nav>
+        <form class="actor-form" method="post" action="{% url 'set-actor' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <label for="current-actor">Current user</label>
+            <div class="inline-control">
+                <input
+                    id="current-actor"
+                    name="current_actor"
+                    value="{{ current_actor }}"
+                    placeholder="user@example.com"
+                >
+                <button type="submit" class="secondary">Set</button>
+            </div>
+            <small>Temporary development identity</small>
+        </form>
+    </header>
+
+    <main>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="notice {{ message.tags }}" role="status">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
