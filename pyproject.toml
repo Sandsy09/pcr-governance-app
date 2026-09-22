@@ -1,6 +1,6 @@
 [project]
 name = "pcr-governance-app"
-version = "0.1.20"
+version = "0.2.0"
 description = "Internal Python application for PCR management"
 readme = "README.md"
 requires-python = ">=3.11"
