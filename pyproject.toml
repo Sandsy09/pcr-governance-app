@@ -71,6 +71,7 @@ default-groups = ["dev"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = [
@@ -112,6 +113,11 @@ python_version = "3.11"
 strict = true
 warn_unreachable = true
 warn_unused_ignores = true
+files = ["src", "tests"]
+
+[tool.pylint.main]
+# Discover modules in both src and tests folders
+source-roots = ["src", "tests"]
 
 # -----------------------------------------------------------------------------
 # Tests
@@ -125,6 +131,8 @@ addopts = [
     "--strict-config",
     "--import-mode=importlib",
 ]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
 
 # -----------------------------------------------------------------------------
 # Tasks -- the single definition. Run via `uv run poe <task>`.
