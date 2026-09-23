@@ -1,5 +1,5 @@
 import pytest
-from tests.fakes import FakeUnitOfWork
+from tests.fakes import FakeUnitOfWork, make_uow_factory
 
 from pcr_governance_app.application.approval_service import ApprovalApplicationService
 from pcr_governance_app.application.pcr_service import PCRApplicationService
@@ -84,7 +84,7 @@ def submit_pcr(
     uow: FakeUnitOfWork,
     content: PCRContent,
 ) -> tuple[PCR, ApprovalWorkflow]:
-    pcr_service = PCRApplicationService(uow_factory=lambda: uow)
+    pcr_service = PCRApplicationService(uow_factory=make_uow_factory(uow))
     pcr = pcr_service.create_pcr(
         pcr_code="PCR-2026-0001",
         policy_code="CP-001",
@@ -106,7 +106,7 @@ def test_first_stage_approval_keeps_pcr_in_review(
     content: PCRContent,
 ) -> None:
     pcr, workflow = submit_pcr(uow=uow, content=content)
-    service = ApprovalApplicationService(uow_factory=lambda: uow)
+    service = ApprovalApplicationService(uow_factory=make_uow_factory(uow))
     first_requirement = workflow.stages[0].requirements[0]
 
     result = service.approve(
@@ -132,7 +132,7 @@ def test_final_approval_marks_workflow_and_pcr_approved(
     content: PCRContent,
 ) -> None:
     pcr, workflow = submit_pcr(uow=uow, content=content)
-    service = ApprovalApplicationService(uow_factory=lambda: uow)
+    service = ApprovalApplicationService(uow_factory=make_uow_factory(uow))
 
     first = service.approve(
         workflow_id=workflow.id,
@@ -168,7 +168,7 @@ def test_request_changes_moves_workflow_and_pcr_to_changes_required(
     content: PCRContent,
 ) -> None:
     pcr, workflow = submit_pcr(uow=uow, content=content)
-    service = ApprovalApplicationService(uow_factory=lambda: uow)
+    service = ApprovalApplicationService(uow_factory=make_uow_factory(uow))
 
     result = service.request_changes(
         workflow_id=workflow.id,
@@ -194,7 +194,7 @@ def test_reject_moves_workflow_and_pcr_to_rejected(
     content: PCRContent,
 ) -> None:
     pcr, workflow = submit_pcr(uow=uow, content=content)
-    service = ApprovalApplicationService(uow_factory=lambda: uow)
+    service = ApprovalApplicationService(uow_factory=make_uow_factory(uow))
 
     result = service.reject(
         workflow_id=workflow.id,

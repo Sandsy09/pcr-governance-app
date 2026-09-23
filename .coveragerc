@@ -5,7 +5,7 @@ branch = true
 
 [report]
 show_missing = true
-fail_under = 0
+fail_under = 85
 exclude_also =
     if TYPE_CHECKING:
     raise NotImplementedError

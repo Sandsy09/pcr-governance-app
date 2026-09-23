@@ -115,6 +115,13 @@ warn_unreachable = true
 warn_unused_ignores = true
 files = ["src", "tests"]
 
+[tool.pyrefly]
+# Pyrefly (VS Code extension) only infers "src" as the project layout by
+# default, which fails to resolve `tests.*` imports (mirrors pytest's
+# `pythonpath = ["src", "."]` above).
+project_includes = ["src", "tests"]
+search_path = ["src", "."]
+
 [tool.pylint.main]
 # Discover modules in both src and tests folders
 source-roots = ["src", "tests"]
