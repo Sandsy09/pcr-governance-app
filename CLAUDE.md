@@ -9,7 +9,7 @@ Dependency management and tasks go through `uv`; task definitions live once in
 
 ```bash
 uv sync --all-groups --locked        # install (dev, lint, test, typecheck groups)
-uv run --locked poe check            # lock:check + format:check + lint + typecheck + test + coverage + pyright, in order
+uv run --locked poe check            # lock:check + format:check + lint + typecheck + test + coverage + typecheck:pyright, in order
 ```
 
 Individual tasks:
@@ -19,7 +19,8 @@ Individual tasks:
 | `uv run poe lock:check` | Verify `uv.lock` matches declared dependencies |
 | `uv run poe lint` / `poe lint:fix` | Ruff lint |
 | `uv run poe format` / `poe format:check` | Ruff format |
-| `uv run poe typecheck` | mypy (strict) |
+| `uv run poe typecheck` | ty (default typechecker, gates `poe check`) |
+| `uv run poe typecheck:mypy` | mypy (strict) — kept available, not part of `poe check` |
 | `uv run poe typecheck:pyright` | pyright |
 | `uv run poe test` | pytest |
 | `uv run poe coverage` | pytest with coverage report |
