@@ -1,16 +1,11 @@
 from types import TracebackType
-from typing import Self
+from typing import Self, cast
 from uuid import UUID
 
+from pcr_governance_app.application.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from pcr_governance_app.domain.approval import ApprovalRoute, ApprovalWorkflow
 from pcr_governance_app.domain.audit import AuditEvent
 from pcr_governance_app.domain.pcr import PCR
-from pcr_governance_app.persistence.repositories import (
-    ApprovalRouteRepository,
-    ApprovalWorkflowRepository,
-    AuditEventRepository,
-    PCRRepository,
-)
 
 
 class FakePCRRepository:
@@ -97,10 +92,10 @@ class FakeApprovalWorkflowRepository:
 
 class FakeUnitOfWork:
     def __init__(self) -> None:
-        self.pcrs: PCRRepository = FakePCRRepository()
-        self.audits: AuditEventRepository = FakeAuditEventRepository()
-        self.approval_routes: ApprovalRouteRepository = FakeApprovalRouteRepository()
-        self.approval_workflows: ApprovalWorkflowRepository = FakeApprovalWorkflowRepository()
+        self.pcrs = FakePCRRepository()
+        self.audits = FakeAuditEventRepository()
+        self.approval_routes = FakeApprovalRouteRepository()
+        self.approval_workflows = FakeApprovalWorkflowRepository()
         self.committed = False
         self.rolled_back = False
 
@@ -123,3 +118,12 @@ class FakeUnitOfWork:
 
     def rollback(self) -> None:
         self.rolled_back = True
+
+
+def make_uow_factory(uow: FakeUnitOfWork) -> UnitOfWorkFactory:
+    # Repository attrs are concretely typed for `.items` access, so the cast below
+    # papers over the resulting invariance mismatch against the UnitOfWork protocol.
+    def factory() -> UnitOfWork:
+        return cast(UnitOfWork, uow)
+
+    return factory
