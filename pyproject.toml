@@ -16,7 +16,6 @@ dependencies = [
     "pydantic>=2.13.5",
     "pyodbc>=5.3.0",
     "sqlalchemy>=2.0.54",
-    "ty>=0.0.83",
 ]
 
 [project.urls]
@@ -47,6 +46,7 @@ typecheck = [
     "mypy>=1.14",
     "pyright>=1.1.390,<2",
     "django-stubs>=6.1.1",
+    "ty>=0.0.83",
 ]
 postgres = [
     "psycopg[binary]>=3.2",
@@ -136,11 +136,12 @@ lint = "ruff check ."
 format = "ruff format ."
 "lint:fix" = "ruff check --fix ."
 "format:check" = "ruff format --check ."
-typecheck = "mypy ."
+typecheck = "ty check"
+"typecheck:mypy" = "mypy ."
+"typecheck:pyright" = "pyright"
 test = "pytest"
 changelog = "git-cliff --output CHANGELOG.md"
 coverage = "pytest --cov --cov-report=term-missing"
-"typecheck:pyright" = "pyright"
 check = [
     "lock:check",
     "format:check",

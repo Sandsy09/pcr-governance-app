@@ -37,7 +37,8 @@ elsewhere. Run any of them with `uv run poe <task>`.
 | `uv run poe lock:check` | Verify `uv.lock` matches declared dependencies |
 | `uv run poe lint` / `poe lint:fix` | Ruff lint |
 | `uv run poe format` / `poe format:check` | Ruff format |
-| `uv run poe typecheck` | mypy (strict) |
+| `uv run poe typecheck` | ty — the default typechecker, gates `poe check` |
+| `uv run poe typecheck:mypy` | mypy (strict) — kept available, not part of `poe check` |
 | `uv run poe typecheck:pyright` | pyright |
 | `uv run poe test` | pytest |
 | `uv run poe coverage` | pytest with a coverage report |
@@ -157,8 +158,10 @@ mapper/repository/migration behavior that the fakes can't represent.
 - Ruff enables `E`, `W`, `F`, `I`, `N`, `UP`, `B`, `A`, `C4`, `SIM`, `PTH`, `RUF` and `ANN`
   (flake8-annotations) — new code needs type annotations. Line length is 100.
   `uv run poe lint:fix` and `uv run poe format` apply what can be auto-fixed.
-- mypy runs in `strict` mode with `warn_unreachable` and `warn_unused_ignores`; pyright runs
-  separately as a second opinion (`uv run poe typecheck:pyright`). Both are part of `poe check`.
+- [ty](https://docs.astral.sh/ty/) (`uv run poe typecheck`) is the default typechecker and gates
+  `poe check`. mypy still runs in `strict` mode with `warn_unreachable` and
+  `warn_unused_ignores`, and pyright runs as a second opinion — both stay available
+  (`poe typecheck:mypy`, `poe typecheck:pyright`) but aren't part of `poe check`.
 
 ## Branching, commits and PRs
 
@@ -190,8 +193,9 @@ Every push to `main` and every pull request runs `.github/workflows/ci.yml`:
 | Job | What it checks |
 | --- | --- |
 | `lint` | `lock:check`, `format:check`, `lint` |
-| `typecheck` | mypy strict |
-| `type-check-pyright` | pyright |
+| `typecheck` | ty — the default typechecker (`poe typecheck`) |
+| `typecheck-mypy` | mypy strict (`poe typecheck:mypy`) |
+| `type-check-pyright` | pyright (`poe typecheck:pyright`) |
 | `test` | pytest on Python 3.11, 3.12 and 3.13, plus a coverage report (uploaded as an artifact from the 3.13 run) |
 | `migrations` | `alembic upgrade head` then `alembic check` against both a fresh SQLite file and a Postgres service container |
 | `build` | builds the sdist/wheel and checks metadata with `twine check` |
