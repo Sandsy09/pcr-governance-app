@@ -48,10 +48,14 @@ typecheck = [
     "pyright>=1.1.390,<2",
     "django-stubs>=6.1.1",
 ]
+postgres = [
+    "psycopg[binary]>=3.2",
+]
 dev = [
     { include-group = "lint" },
     { include-group = "test" },
     { include-group = "typecheck" },
+    { include-group = "postgres" },
     "poethepoet>=0.31",
     "git-cliff>=2.7,<3",
     "pre-commit>=4,<5",
@@ -146,3 +150,33 @@ check = [
     "coverage",
     "typecheck:pyright",
 ]
+
+# -----------------------------------------------------------------------------
+# Local development database -- see CLAUDE.md ("Two separate databases").
+# `envfile` loads .env so PCR_DATABASE_URL (and PCR_POSTGRES_*) are picked up
+# without exporting them in the shell first.
+# -----------------------------------------------------------------------------
+
+[tool.poe.tasks.serve]
+cmd = "python manage.py runserver"
+envfile = ".env"
+
+[tool.poe.tasks."db:upgrade"]
+cmd = "alembic upgrade head"
+envfile = ".env"
+
+[tool.poe.tasks."db:revision"]
+cmd = "alembic revision --autogenerate"
+envfile = ".env"
+
+[tool.poe.tasks."db:check"]
+cmd = "alembic check"
+envfile = ".env"
+
+[tool.poe.tasks."pg:up"]
+cmd = "docker compose up -d --wait"
+envfile = ".env"
+
+[tool.poe.tasks."pg:down"]
+cmd = "docker compose down"
+envfile = ".env"

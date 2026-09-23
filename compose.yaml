@@ -1,0 +1,26 @@
+# Optional local Postgres for development machines that can't reach the
+# real SQL Server instance yet. Not used in CI (which runs its own Postgres
+# service container) and not required on the company laptop, which uses
+# SQLite instead -- see CLAUDE.md ("Two separate databases") and README.md.
+#
+# Credentials come from .env (git-ignored); this file holds none.
+services:
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PCR_POSTGRES_USER:?set PCR_POSTGRES_USER in .env}
+      POSTGRES_PASSWORD: ${PCR_POSTGRES_PASSWORD:?set PCR_POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${PCR_POSTGRES_DB:?set PCR_POSTGRES_DB in .env}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pcr-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${PCR_POSTGRES_USER} -d $${PCR_POSTGRES_DB}"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  pcr-postgres-data:
