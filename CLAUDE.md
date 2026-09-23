@@ -24,6 +24,15 @@ Individual tasks:
 | `uv run poe test` | pytest |
 | `uv run poe coverage` | pytest with coverage report |
 | `uv run poe changelog` | regenerate `CHANGELOG.md` via git-cliff |
+| `uv run poe serve` | `manage.py runserver`, loading `.env` |
+| `uv run poe db:upgrade` | apply Alembic migrations to `PCR_DATABASE_URL` |
+| `uv run poe db:revision -m "..."` | autogenerate a migration from model changes |
+| `uv run poe db:check` | fail if models and migrations have drifted |
+| `uv run poe pg:up` / `poe pg:down` | start/stop the local Postgres container (`compose.yaml`) |
+
+`db:upgrade`/`db:revision`/`db:check`/`serve`/`pg:up`/`pg:down` load `.env` themselves (poe's
+per-task `envfile`), unlike the other tasks above — no need to export `PCR_DATABASE_URL` by hand
+for those.
 
 Run a single test directly with pytest (not through poe):
 
@@ -45,11 +54,16 @@ separate from Django's own database (see Architecture) and is required at runtim
 
 ```bash
 cp .env.example .env   # then fill in real values; .env is git-ignored
-uv run python manage.py runserver
+uv run poe db:upgrade  # apply Alembic migrations before first run
+uv run poe serve
 ```
 
 `PCR_DATABASE_URL` must be set or any view touching PCR data renders a 503 configuration-error
-page (`AppConfigurationError`, caught by the `configuration_required` view decorator).
+page (`AppConfigurationError`, caught by the `configuration_required` view decorator). SQL Server
+is the target backend, but local access to it is currently blocked by a permissions issue, so
+`.env.example` defaults to SQLite (`sqlite:///pcr_dev.sqlite3`); Postgres via `poe pg:up` +
+`compose.yaml` is the alternative for machines where Docker is available. See README.md's "Local
+database" section for both workflows.
 
 ## Architecture
 
@@ -88,7 +102,10 @@ layer knows nothing about Django or SQLAlchemy.
   (`persistence/unit_of_work.py`) implements the `UnitOfWork` protocol, opening a `Session` per
   `with` block and rolling back on exception or missing commit. Domain datetimes are always
   timezone-aware; `mappers.to_database_datetime`/`from_database_datetime` convert to/from the
-  naive UTC values stored in SQLite.
+  naive UTC values stored in the database. `persistence/migrations/` holds the Alembic
+  environment (`env.py` builds its engine from `PCR_DATABASE_URL` via `session.py`, so it works
+  against SQLite, Postgres, or SQL Server); `session.create_database_engine` also turns on
+  `PRAGMA foreign_keys` for SQLite connections, since SQLite ignores FK constraints by default.
 
 - **`web/`** — Django views (`views.py`), forms, presenters (view-model formatting, e.g. status
   labels), and templates. Views are intentionally thin: they call into
@@ -103,8 +120,11 @@ layer knows nothing about Django or SQLAlchemy.
   session app — sessions actually use `signed_cookies`, so this is effectively unused for app
   data) is distinct from the SQLAlchemy engine/session created from `PCR_DATABASE_URL` in
   `web/services.py`, which is where all PCR/approval/audit data lives. Don't assume Django's ORM
-  or `manage.py migrate` touches PCR data — there are no Alembic migrations checked in yet even
-  though `alembic` is a declared dependency.
+  or `manage.py migrate` touches PCR data — that data's schema is owned entirely by the Alembic
+  migrations in `persistence/migrations/versions/` (apply with `poe db:upgrade`). A model change
+  in `persistence/models.py` needs a matching migration via `poe db:revision -m "..."`, checked
+  in alongside it — `poe db:check` (and CI's `migrations` job, against both SQLite and Postgres)
+  fails on drift between the two.
 
 - **`rendering/`** currently contains only an empty `templates/` placeholder — not yet wired up.
 

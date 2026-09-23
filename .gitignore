@@ -14,6 +14,10 @@ htmlcov/
 .mypy_cache/
 .ruff_cache/
 
+# Local development databases (SQLite file used by PCR_DATABASE_URL, or
+# Django's own db.sqlite3) -- never commit these.
+*.sqlite3
+
 # Local secrets and credentials -- never commit these.
 .env
 .env.*
@@ -27,5 +31,3 @@ id_rsa
 id_rsa.*
 credentials.json
 .direnv/
-
-

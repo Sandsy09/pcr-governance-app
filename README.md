@@ -49,6 +49,32 @@ cp .env.example .env
 `.env` is git-ignored. `.env.example` is tracked -- keep every entry in it a
 placeholder, never a real value.
 
+### Local database
+
+SQL Server is the target backend, but local access to it is currently blocked by a
+permissions issue, so `PCR_DATABASE_URL` in `.env` points at one of two local
+alternatives instead:
+
+- **Company laptop -- SQLite** (default in `.env.example`, no extra setup):
+
+  ```bash
+  uv run poe db:upgrade
+  uv run poe serve
+  ```
+
+- **Personal machine -- Postgres**, via Docker Compose (`compose.yaml`). Set the
+  Postgres `PCR_DATABASE_URL` and `PCR_POSTGRES_*` values in `.env`, then:
+
+  ```bash
+  uv run poe pg:up       # starts postgres, waits for it to be healthy
+  uv run poe db:upgrade
+  uv run poe serve
+  ```
+
+Schema changes go through Alembic migrations, not manual DDL -- after changing a
+model in `persistence/models.py`, run `uv run poe db:revision -m "..."` and
+commit the generated file under `persistence/migrations/versions/`.
+
 ## Repository
 
 <https://github.com/Sandsy09/pcr-governance-app>
