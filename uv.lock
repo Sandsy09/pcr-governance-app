@@ -316,16 +316,16 @@ wheels = [
 
 [[package]]
 name = "django-tailwind"
-version = "4.5.0"
+version = "4.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django", version = "5.2.17", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "django", version = "6.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "pytailwindcss" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4a/52/a87b0d08fd786f3f4bd7686edc0d3ae5cd1906d087cf8e2c2ef8157b07d7/django_tailwind-4.5.0.tar.gz", hash = "sha256:c4b40820663ac3932f6951b82b91e3773361a46d9bde972bc8a338eee3c5d045", size = 13966, upload-time = "2026-06-12T13:25:57.638Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ff/43/4fbef32ce3430b9e87bfe2bc31941b4c536c645b91fb78fdd393ab4d57cd/django_tailwind-4.6.0.tar.gz", hash = "sha256:a8ff8ddf576d840c1af9e3c59a62297b17e897b2665bfc14c4f69e85d1e18527", size = 15687, upload-time = "2026-10-13T11:58:34.784Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/09/32/ffb8c8f6e86d06912d3afe4800e72a5045d21916171b36e256c07f87cc91/django_tailwind-4.5.0-py3-none-any.whl", hash = "sha256:618314751e867e8871b1e06ed98c0b8beb762ac9b431f739647ad4d82ab8b125", size = 23363, upload-time = "2026-06-12T13:25:56.472Z" },
+    { url = "https://files.pythonhosted.org/packages/f7/3c/b2a07d31d0374f08d2ac706a89a2a9d0ae18e9c476a20cfc2c5d36b66faa/django_tailwind-4.6.0-py3-none-any.whl", hash = "sha256:b865bac746158dd103ffc3b7855f54f8d75a3147eb59867d8ed0c145fd5f7a34", size = 25397, upload-time = "2026-10-13T11:58:33.332Z" },
 ]
 
 [[package]]
